@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ครบรอบ 1 เดือนของเรา - เฉลิมฉลองความรักและความทรงจำ">
+    <title>J&M - ครบรอบ 1 เดือน 💜</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Sans+Thai:wght@300;400;500;600&family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Password Protection Overlay -->
+    <div id="password-overlay" class="password-overlay">
+        <div class="password-container">
+            <div class="password-content">
+                <div class="heart-icon">
+                    <img src="MY_GF.jpg" alt="Couple Image" class="password-avatar">
+                </div>
+                <h1 class="password-title">J&M</h1>
+                <p class="password-hint">วันที่เราคบกันคือวันที่</p>
+                
+                <!-- PIN Display -->
+                <div class="pin-display" id="pin-display">
+                    <div class="pin-dot"></div>
+                    <div class="pin-dot"></div>
+                    <div class="pin-dot"></div>
+                    <div class="pin-dot"></div>
+                    <div class="pin-dot"></div>
+                    <div class="pin-dot"></div>
+                </div>
+                
+                <!-- Numpad -->
+                <div class="numpad">
+                    <button class="num-btn" data-num="1">1</button>
+                    <button class="num-btn" data-num="2">2</button>
+                    <button class="num-btn" data-num="3">3</button>
+                    <button class="num-btn" data-num="4">4</button>
+                    <button class="num-btn" data-num="5">5</button>
+                    <button class="num-btn" data-num="6">6</button>
+                    <button class="num-btn" data-num="7">7</button>
+                    <button class="num-btn" data-num="8">8</button>
+                    <button class="num-btn" data-num="9">9</button>
+                    <button class="num-btn delete-btn" data-num="delete">⌫</button>
+                    <button class="num-btn" data-num="0">0</button>
+                    <button class="num-btn unlock-btn-keypad" data-num="enter">></button>
+                </div>
+                
+                <p class="password-error" id="password-error">ลืมหรอ 5555 นึกดีๆ </p>
+            </div>
+            <div class="floating-hearts">
+                <span class="floating-heart" style="--delay: 0s; --x: 10%;">💜</span>
+                <span class="floating-heart" style="--delay: 2s; --x: 25%;">💜</span>
+                <span class="floating-heart" style="--delay: 4s; --x: 50%;">💜</span>
+                <span class="floating-heart" style="--delay: 1s; --x: 75%;">💜</span>
+                <span class="floating-heart" style="--delay: 3s; --x: 90%;">💜</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main id="main-content" class="main-content hidden">
+        <!-- Spotify-Style Music Player -->
+        <div class="music-player-container" id="music-player">
+            <!-- Mini Player (collapsed) -->
+            <div class="mini-player" id="mini-player">
+                <div class="mini-album-art">🎵</div>
+                <div class="mini-info">
+                    <span class="mini-title" id="mini-song-title">กำลังเล่น...</span>
+                    <div class="mini-progress">
+                        <div class="mini-progress-bar" id="mini-progress-bar"></div>
+                    </div>
+                </div>
+                <div class="mini-controls">
+                    <button class="mini-btn" id="mini-prev">⏮</button>
+                    <button class="mini-btn play-pause" id="mini-play-pause">❚❚</button>
+                    <button class="mini-btn" id="mini-next">⏭</button>
+                    <button class="mini-btn expand-btn" id="expand-player">▲</button>
+                </div>
+            </div>
+            
+            <!-- Full Player (expanded) -->
+            <div class="full-player hidden" id="full-player">
+                <div class="player-header">
+                    <span class="player-title">🎵 เพลงของเรา</span>
+                    <button class="collapse-btn" id="collapse-player">▼</button>
+                </div>
+                <div class="playlist">
+                    <div class="song-item active" data-index="0">
+                        <span class="song-number">1</span>
+                        <div class="song-info">
+                            <span class="song-name">รักแฟน</span>
+                            <span class="song-artist">BENT</span>
+                        </div>
+                        <span class="song-playing">♪</span>
+                    </div>
+                    <div class="song-item" data-index="1">
+                        <span class="song-number">2</span>
+                        <div class="song-info">
+                            <span class="song-name">คนพิเศษ</span>
+                            <span class="song-artist">URMINE</span>
+                        </div>
+                        <span class="song-playing">♪</span>
+                    </div>
+                </div>
+                <div class="now-playing">
+                    <div class="now-playing-info">
+                        <span class="now-label">กำลังเล่น</span>
+                        <span class="now-title" id="now-playing-title">รกแฟน - BENT</span>
+                    </div>
+                    <div class="progress-container">
+                        <span class="time-current" id="time-current">0:00</span>
+                        <div class="progress-bar-container" id="progress-bar-container">
+                            <div class="progress-bar" id="progress-bar"></div>
+                        </div>
+                        <span class="time-total" id="time-total">0:00</span>
+                    </div>
+                    <div class="player-controls">
+                        <button class="control-btn" id="prev-btn">⏮</button>
+                        <button class="control-btn play-btn" id="play-pause-btn">❚❚</button>
+                        <button class="control-btn" id="next-btn">⏭</button>
+                        <div class="volume-control">
+                            <span class="volume-icon">🔊</span>
+                            <input type="range" class="volume-slider" id="volume-slider" min="0" max="100" value="70">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hero Section with Day Counter -->
+        <section class="hero-section">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1 class="hero-title typing-effect" data-text="J&M ครบรอบ 1 เดือน">ครบรอบ 1 เดือน</h1>
+                <p class="hero-subtitle">💜 พี่รักหนูนะ 💜</p>
+                
+                <div class="day-counter">
+                    <div class="counter-label">เราอยู่ด้วยกันมาแล้ว</div>
+                    <div class="counter-display">
+                        <div class="counter-item">
+                            <span class="counter-number" id="days">00</span>
+                            <span class="counter-unit">วัน</span>
+                        </div>
+                        <div class="counter-separator">:</div>
+                        <div class="counter-item">
+                            <span class="counter-number" id="hours">00</span>
+                            <span class="counter-unit">ชั่วโมง</span>
+                        </div>
+                        <div class="counter-separator">:</div>
+                        <div class="counter-item">
+                            <span class="counter-number" id="minutes">00</span>
+                            <span class="counter-unit">นาที</span>
+                        </div>
+                        <div class="counter-separator">:</div>
+                        <div class="counter-item">
+                            <span class="counter-number" id="seconds">00</span>
+                            <span class="counter-unit">วินาที</span>
+                        </div>
+                    </div>
+                    <div class="counter-since">ตั้งแต่วันที่ 1 มกราคม พ.ศ. 2569 เวลา 01:08 น.</div>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <span>เลื่อนเพื่อดูความทรงจำของเรา</span>
+                <div class="scroll-arrow">↓</div>
+            </div>
+        </section>
+
+        <!-- Memory Timeline Section -->
+        <section class="timeline-section">
+            <div class="section-container">
+                <h2 class="section-title">
+                    <span class="title-decoration">✦</span>
+                    ไทม์ไลน์ความทรงจำ
+                    <span class="title-decoration">✦</span>
+                </h2>
+                <p class="section-subtitle">ช่วงเวลาสวยงามที่ผ่านมา 💜</p>
+                
+                <div class="timeline">
+                    <div class="timeline-line"></div>
+                    
+                    <!-- 26 ธ.ค. 2568 - Make Heart in Hair -->
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <div class="timeline-date">26 ธันวาคม 2568</div>
+                            <h3 class="timeline-title">วันนั้นหนูเมา</h3>
+                            <div class="timeline-media">
+                                <img src="MAKE_HEART_IN_HAIR26.12.2025.jpg" alt="Make Heart" class="timeline-img">
+                            </div>
+                            <p class="timeline-description">อยู่ๆหนูก็ทำผมรูปหัวใจเฉยเลย พี่มีความสุขมาก แอบปลื้มแต่เก็บอาการอยู่55555</p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                    
+                    <!-- 27 ธ.ค. 2568 - Stories & Video Call -->
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <div class="timeline-date">27 ธันวาคม 2568</div>
+                            <h3 class="timeline-title">Video Call 🌟</h3>
+                            <div class="timeline-media">
+                                <img src="stories27.12.68.jpg" alt="Stories" class="timeline-img">
+                                <img src="video_call_27_12_2025.jpg" alt="Video Call" class="timeline-img">
+                            </div>
+                            <p class="timeline-description">ทุกครั้งที่เรา วีดีโอคอลกัน โทรคุยกัน พี่มีความสุขทุกครั้งเลย พี่ขอให้หนูอยู่กับพี่แบบนี้ ไปนานๆนะ</p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                    
+                    <!-- 30 ธ.ค. 2568 - Say I Love Her -->
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <div class="timeline-date">30 ธันวาคม 2568</div>
+                            <h3 class="timeline-title">บอกรัก</h3>
+                            <div class="timeline-media">
+                                <video controls class="timeline-video">
+                                    <source src="SAY_I_LOVE_HER_30.12.2025.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                            <p class="timeline-description">พี่ดีใจมาก ที่หนูตอบพี่ว่า หนูรักพี่ มันเป็นวันที่ พี่ตัดสินใจจะขอหนูเป็นแฟน และพี่คิดว่าพี่ตัดสินใจถูกแล้ว ที่ขอหนูเป็นแฟน</p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                    
+                    <!-- 1 ม.ค. 2569 - วันที่คบกัน -->
+                    <div class="timeline-item right special">
+                        <div class="timeline-content highlight">
+                            <div class="timeline-date">1 มกราคม 2569 🎉</div>
+                            <h3 class="timeline-title">วันที่เราคบกัน! 💜💜💜</h3>
+                            <div class="timeline-media">
+                                <img src="I want to be your gf01.01.2026.jpg" alt="The Day" class="timeline-img">
+                            </div>
+                            <p class="timeline-description">ตอนนั้น พี่ใจเต้นแรงมาก ตื่นเต้นสุดๆเลย คิดในหัวเยอะแยะไปหมด กูจะแห้วมั้ยหว่าาา เขาจะรับรักกูมั้ยเนี่ยยย</p>
+                        </div>
+                        <div class="timeline-dot pulse"></div>
+                    </div>
+                    
+                    <!-- 3 ม.ค. 2569 - Video -->
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <div class="timeline-date">3 มกราคม 2569</div>
+                            <h3 class="timeline-title">ความทรงจำ </h3>
+                            <div class="timeline-media">
+                                <video controls class="timeline-video">
+                                    <source src="Video03.01.2026.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                            <p class="timeline-description">หนูชัดเจนกับพี่มาก ตั้งแต่เราคุยกันเลย พี่ชอบมากๆ พี่รักหนูม้ากกกก พี่ไปเห็นเพลงในติ้กตอกมา แล้วแบบ ความหมายมันดีมาก พี่ฟังแล้ว นึกถึงหนูเลย พี่เลยตัดคลิปที่มีหนูอยู่ในเพลงนั้น</p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                    
+                    <!-- 17 ม.ค. 2569 - Watching Movie -->
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <div class="timeline-date">17 มกราคม 2569</div>
+                            <h3 class="timeline-title">ดูหนังด้วยกัน 🎬</h3>
+                            <div class="timeline-media">
+                                <img src="watching_movie_with_GF17.01.2569.png" alt="Watching Movie" class="timeline-img">
+                            </div>
+                            <p class="timeline-description">ถึงเราจะไม่ค่อยได้ดูหนังด้วยกัน แต่มันเป็นโมเม้นที่พี่ชอบนะ มันเป็นความสุขเล็กๆของพี่ที่ได้อยู่กับหนู เป็นโมเม้นที่ได้ทำกิจกรรมร่วมกัน</p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                    
+                    <!-- 29 ม.ค. 2569 - Video -->
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <div class="timeline-date">29 มกราคม 2569</div>
+                            <h3 class="timeline-title">4 วันที่แล้ว</h3>
+                            <div class="timeline-media">
+                                <video controls class="timeline-video">
+                                    <source src="video29.01.2569.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                            <p class="timeline-description">พี่คลั่งรักหนูมาก ไม่รู้พี่เก็บอาการอยู่ไหม พี่ไม่อยากทำตัวคลั่งรักหนูเกินไป เดี๋ยวโดนเบื่อ 5555 ทุกวันนี้ พยายามเก็บอาการอยู๋ แต่ไม่ค่อยจะอยู๋เท่าไร</p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                    
+                    <!-- เล่นเกมด้วยกัน -->
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <div class="timeline-date">ตลอดมา 🎮</div>
+                            <h3 class="timeline-title">เล่นเกมด้วยกัน</h3>
+                            <div class="timeline-media">
+                                <img src="play_game_with_GF1.jpg" alt="Playing Game 1" class="timeline-img">
+                                <img src="play_game_with_GF2.jpg" alt="Playing Game 2" class="timeline-img">
+                                <img src="play_game_with_GF3.jpg" alt="Playing Game 3" class="timeline-img">
+                                <img src="play_game_with_GF4.jpg" alt="Playing Game 4" class="timeline-img">
+                            </div>
+                            <p class="timeline-description">เล่นเกมกับหนู สนุกมากๆ เป็นโมเม้นน่ารักๆของพี่เลย 😊</p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                    
+                    <!-- NOW - 1 ก.พ. 2569 -->
+                    <div class="timeline-item left special">
+                        <div class="timeline-content highlight">
+                            <div class="timeline-date">1 กุมภาพันธ์ 2569 💜</div>
+                            <h3 class="timeline-title">ครบรอบ 1 เดือน!</h3>
+                            <div class="timeline-media">
+                                <img src="NOW.jpg" alt="NOW" class="timeline-img">
+                            </div>
+                            <p class="timeline-description">วันนี้! ครบรอบ 1 เดือนของเรา 💜 พี่รักหนูนะ พี่หวังว่าเราจะอยู่ด้วยกันไปนานๆนะ</p>
+                        </div>
+                        <div class="timeline-dot pulse"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Photo Gallery Section -->
+        <section class="gallery-section">
+            <div class="section-container">
+                <h2 class="section-title">
+                    <span class="title-decoration">✦</span>
+                    รูปภาพความทรงจำ 📸
+                    <span class="title-decoration">✦</span>
+                </h2>
+                <p class="section-subtitle">คลิกเพื่อดูภาพขนาดใหญ่</p>
+                
+                <div class="gallery-grid">
+                    <!-- รูปจาก photos folder -->
+                    <div class="gallery-item large" data-index="1">
+                        <img src="photos/1766852963227.jpg" alt="Memory" class="gallery-img">
+                        <div class="gallery-overlay"><span>💜</span></div>
+                    </div>
+                    <div class="gallery-item large" data-index="2">
+                        <img src="photos/1767093059021.jpg" alt="Memory" class="gallery-img">
+                        <div class="gallery-overlay"><span>💜</span></div>
+                    </div>
+                    <div class="gallery-item" data-index="3">
+                        <img src="photos/Screenshot_2025-12-26-20-04-15-21_1c337646f29875672b5a61192b9010f9.jpg" alt="26 Dec" class="gallery-img">
+                        <div class="gallery-overlay"><span>💜</span></div>
+                    </div>
+                    <div class="gallery-item" data-index="4">
+                        <img src="photos/Screenshot_2025-12-27-10-44-07-72_b783bf344239542886fee7b48fa4b892.jpg" alt="27 Dec" class="gallery-img">
+                        <div class="gallery-overlay"><span>💜</span></div>
+                    </div>
+                    <div class="gallery-item" data-index="5">
+                        <img src="photos/image-20251229164508588.jpg" alt="29 Dec" class="gallery-img">
+                        <div class="gallery-overlay"><span>💜</span></div>
+                    </div>
+                    <div class="gallery-item" data-index="6">
+                        <img src="photos/Screenshot_2025-12-30-13-19-26-48_1c337646f29875672b5a61192b9010f9.jpg" alt="30 Dec" class="gallery-img">
+                        <div class="gallery-overlay"><span>💜</span></div>
+                    </div>
+                    <div class="gallery-item" data-index="7">
+                        <img src="photos/Screenshot_2025-12-31-13-37-45-44_1c337646f29875672b5a61192b9010f9.jpg" alt="31 Dec" class="gallery-img">
+                        <div class="gallery-overlay"><span>💜</span></div>
+                    </div>
+                    <div class="gallery-item" data-index="8">
+                        <img src="photos/Screenshot_2026-01-04-22-18-15-12_1c337646f29875672b5a61192b9010f9.jpg" alt="4 Jan" class="gallery-img">
+                        <div class="gallery-overlay"><span>💜</span></div>
+                    </div>
+                    <div class="gallery-item" data-index="9">
+                        <img src="photos/Screenshot_2026-01-06-23-54-42-07_1c337646f29875672b5a61192b9010f9.jpg" alt="6 Jan" class="gallery-img">
+                        <div class="gallery-overlay"><span>💜</span></div>
+                    </div>
+                    <div class="gallery-item" data-index="10">
+                        <img src="photos/MEITU_20260110_044417029.jpg" alt="10 Jan" class="gallery-img">
+                        <div class="gallery-overlay"><span>💜</span></div>
+                    </div>
+                    <div class="gallery-item" data-index="11">
+                        <img src="photos/Screenshot_2026-01-11-15-09-23-18_1c337646f29875672b5a61192b9010f9.jpg" alt="11 Jan" class="gallery-img">
+                        <div class="gallery-overlay"><span>💜</span></div>
+                    </div>
+                    <div class="gallery-item" data-index="12">
+                        <img src="photos/Screenshot_2026-01-12-12-10-41-40_1c337646f29875672b5a61192b9010f9.jpg" alt="12 Jan" class="gallery-img">
+                        <div class="gallery-overlay"><span>💜</span></div>
+                    </div>
+                    <div class="gallery-item" data-index="13">
+                        <img src="photos/IMG_20260117_212202.png" alt="17 Jan" class="gallery-img">
+                        <div class="gallery-overlay"><span>💜</span></div>
+                    </div>
+                    <div class="gallery-item" data-index="14">
+                        <img src="photos/Screenshot_2026-01-24-07-20-14-10_1c337646f29875672b5a61192b9010f9.jpg" alt="24 Jan" class="gallery-img">
+                        <div class="gallery-overlay"><span>💜</span></div>
+                    </div>
+                    <div class="gallery-item" data-index="15">
+                        <img src="photos/IMG_20260125_151903_863.jpg" alt="25 Jan" class="gallery-img">
+                        <div class="gallery-overlay"><span>💜</span></div>
+                    </div>
+                    <div class="gallery-item" data-index="16">
+                        <img src="photos/IMG_20260126_122107_474.jpg" alt="26 Jan" class="gallery-img">
+                        <div class="gallery-overlay"><span>💜</span></div>
+                    </div>
+                    <div class="gallery-item" data-index="17">
+                        <img src="photos/Screenshot_2026-01-26-16-50-03-38_1c337646f29875672b5a61192b9010f9.jpg" alt="26 Jan" class="gallery-img">
+                        <div class="gallery-overlay"><span>💜</span></div>
+                    </div>
+                    <div class="gallery-item" data-index="18">
+                        <img src="photos/Screenshot_2026-01-30-12-56-37-34_1c337646f29875672b5a61192b9010f9.jpg" alt="30 Jan" class="gallery-img">
+                        <div class="gallery-overlay"><span>💜</span></div>
+                    </div>
+                    <div class="gallery-item large" data-index="19">
+                        <img src="photos/Screenshot_2026-01-30-17-50-17-88_04ee14c4c8051f2c56abeaeb501dee7b.jpg" alt="30 Jan" class="gallery-img">
+                        <div class="gallery-overlay"><span>💜</span></div>
+                    </div>
+                    <div class="gallery-item" data-index="20">
+                        <img src="photos/Screenshot_2026-01-31-17-37-19-42_be80aec1db9a2b53c9d399db0c602181.jpg" alt="31 Jan" class="gallery-img">
+                        <div class="gallery-overlay"><span>💜</span></div>
+                    </div>
+                    <div class="gallery-item" data-index="21">
+                        <img src="photos/Screenshot_2026-01-31-19-55-52-31_1c337646f29875672b5a61192b9010f9.jpg" alt="31 Jan" class="gallery-img">
+                        <div class="gallery-overlay"><span>💜</span></div>
+                    </div>
+                    <div class="gallery-item" data-index="22">
+                        <img src="photos/Screenshot_2026-01-31-19-56-21-56_1c337646f29875672b5a61192b9010f9.jpg" alt="31 Jan" class="gallery-img">
+                        <div class="gallery-overlay"><span>💜</span></div>
+                    </div>
+                    <div class="gallery-item" data-index="23">
+                        <img src="photos/Screenshot_2026-01-31-20-32-19-52_be80aec1db9a2b53c9d399db0c602181.jpg" alt="31 Jan" class="gallery-img">
+                        <div class="gallery-overlay"><span>💜</span></div>
+                    </div>
+                    <!-- เล่นเกม -->
+                    <div class="gallery-item" data-index="24">
+                        <img src="photos/134133145885753452_1740_979_1768866301840.jpg" alt="Game" class="gallery-img">
+                        <div class="gallery-overlay"><span>🎮</span></div>
+                    </div>
+                    <div class="gallery-item" data-index="25">
+                        <img src="photos/134133145432816303_1740_979_1768866406362.jpg" alt="Game" class="gallery-img">
+                        <div class="gallery-overlay"><span>🎮</span></div>
+                    </div>
+                    <div class="gallery-item" data-index="26">
+                        <img src="photos/134133145268578540_1740_979_1768866419501.jpg" alt="Game" class="gallery-img">
+                        <div class="gallery-overlay"><span>🎮</span></div>
+                    </div>
+                    <!-- GIF -->
+                    <div class="gallery-item" data-index="27">
+                        <img src="photos/Messenger_creation_7B041261-47EA-421B-A962-89C439F39B77.gif" alt="GIF" class="gallery-img">
+                        <div class="gallery-overlay"><span>✨</span></div>
+                    </div>
+                </div>
+                
+                <!-- Videos Section -->
+                <h3 class="gallery-subtitle">🎬 วีดีโอความทรงจำ</h3>
+                <div class="video-gallery">
+                    <div class="video-item">
+                        <video controls class="gallery-video">
+                            <source src="photos/Messenger_creation_A09A5203-507F-4FC9-9E8E-06F71A582547.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="video-item">
+                        <video controls class="gallery-video">
+                            <source src="photos/lv_0_20260103102824.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="video-item">
+                        <video controls class="gallery-video">
+                            <source src="photos/lv_7310954124240112903_20260129123438.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+ <!-- Love Letter Section -->
+        <section class="letter-section">
+            <div class="section-container">
+                <h2 class="section-title">
+                    <span class="title-decoration">✦</span>
+                    จดหมายรัก
+                    <span class="title-decoration">✦</span>
+                </h2>
+                <p class="section-subtitle">จากใจฉันถึงเธอ 💜</p>
+                
+                <div class="letter-container">
+                    <div class="letter-scroll">
+                        <div class="letter-header">
+                            <span class="letter-date">1 กุมภาพันธ์ 2569</span>
+                        </div>
+                        <div class="letter-body">
+                            <p class="letter-greeting">ถึง...ม่อน</p>
+                            <div class="letter-content" id="letter-content">
+                                <p>ตั้งแต่วันแรกที่เราเจอกัน พี่ก็รู้สึกว่าทำไมหนูน่ารักจังเลย ทำไมหนูดูร่าเริงจัง แต่พี่เก็บอาการไว้ในใจ ไม่กล้าบอกใครสักคน แค่ดูหนูจากไกลๆ แล้วก็ยิ้มเงียบๆ</p>
+                                
+                                <p>จนถึงวันนั้น วันที่เราได้คุยกันครั้งแรก พี่ดีใจมากๆ เลย รู้สึกเหมือนได้ใช้อต้มบุญหมดแล้ว ทุกครั้งที่ได้คุยกับหนู พี่รู้สึกว่าเวลาผ่านไปเร็วมาก อยากให้เวลาหยุดอยู่ตรงนั้นเลย</p>
+                                
+                                <p>ตอนนั้นที่เราเลิกคุยกัน พี่เสียใจมากๆ แอบไปร้องไห้ 5555 รู้สึกเหมือนมีอะไรสักอย่างหายไป วันๆ คิดถึงหนูตลอด แต่ก็ไม่กล้าทักไป กลัวหนูจะรำคาญ</p>
+                                
+                                <p>จนเราได้กลับมาเจอกันอีกรอบ พี่ดีใจมากจนบอกไม่ถูก ตอนนั้นพี่บอกกับตัวเองว่า ครั้งนี้จะไม่ปล่อยให้หนูหายไปอีกแล้ว จะดูแลหนูให้ดีที่สุด</p>
+                                
+                                <p>พี่ก็ยังรู้สึกว่าหนูน่ารักจัง ตั้งแต่วันนั้นจนถึงวันนี้ ทุกครั้งที่เห็นหนูยิ้ม พี่ก็ยิ้มตาม ทุกครั้งที่ได้อยู่ข้างๆ หนู พี่รู้สึกอบอุ่นและมีความสุขมากๆ</p>
+                                
+                                <p>หนูอาจจะไม่รู้หรอกว่า การมีหนูเข้ามาในชีวิต มันเปลี่ยนพี่ไปเยอะแค่ไหน ทำให้พี่มีเหตุผลที่จะยิ้มทุกวัน มีแรงใจที่จะตื่นขึ้นมาในทุกเช้า เพราะรู้ว่าจะได้เห็นหนู ได้คุยกับหนู</p>
+                                
+                                <p>พี่อาจจะไม่เก่งในการพูด ไม่เก่งในการเขียน แต่พี่อยากให้หนูรู้ว่า ทุกคำพูดที่พี่พูดกับหนู มันออกมาจากใจจริงๆ พี่รักหนูมากๆ นะ และจะดูแลหนูให้ดีที่สุดเสมอ</p>
+                            </div>
+                            <div class="letter-signature">
+                                <p>ขอบคุณที่เข้ามาเป็นความสุขให้พี่นะ</p>
+                                <p>ขอบคุณที่ให้พี่ได้ดูแลหนู</p>
+                                <p>และขอบคุณที่เป็นหนู</p>
+                                <p class="signature">รักนะ<br>จากพี่จั๊มเอง</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-hearts">💜 💜 💜</div>
+                <p class="footer-text">J&M</p>
+                <p class="footer-date">1 มกราคม 2569 - ตลอดไป</p>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Lightbox for Gallery -->
+    <div id="lightbox" class="lightbox">
+        <button class="lightbox-close">&times;</button>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="Full size image" class="lightbox-image">
+        </div>
+    </div>
+
+    <!-- Background Music -->
+    <audio id="background-music" loop>
+        <source src="BENT - รกแฟน (song).mp3" type="audio/mpeg">
+        <source src="URMINE - คนพเศษ (song).mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="confetti.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
