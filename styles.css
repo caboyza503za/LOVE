@@ -1691,18 +1691,35 @@ body {
   }
 
   .timeline-item {
-    padding-left: 45px;
-    margin-bottom: var(--spacing-md);
+    width: 100% !important;
+    left: 0 !important;
+    padding-left: 55px !important;
+    padding-right: var(--spacing-sm) !important;
+    margin-bottom: calc(var(--spacing-md) * 1.5) !important;
+    text-align: left !important;
   }
 
   .timeline-item.right {
-    padding-left: 45px;
+    left: 0 !important;
+    padding-left: 55px !important;
+    padding-right: var(--spacing-sm) !important;
   }
 
   .timeline-dot {
-    left: 13px;
+    left: 13px !important;
+    right: auto !important;
     width: 14px;
     height: 14px;
+  }
+  
+  .timeline-line {
+    left: 20px !important;
+    transform: none !important;
+  }
+  
+  .timeline-content {
+    padding: var(--spacing-md);
+    margin: 0;
   }
   
   .timeline-title {
