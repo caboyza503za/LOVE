@@ -66,6 +66,7 @@ body {
   overflow-x: hidden;
   padding-left: var(--safe-left);
   padding-right: var(--safe-right);
+  min-height: 100vh;
 }
 
 /* Remove tap highlight on mobile for cleaner UX */
